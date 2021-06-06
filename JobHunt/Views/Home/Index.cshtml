@@ -1,0 +1,142 @@
+﻿@using JobHunt.BU.DTO
+@using JobHunt.BU.Manage
+@*@using JobHunt.BU.Common*@
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Job Hunt | Change Your Life";
+
+  
+
+  
+
+
+
+    //Lấy danh sách list categories of career
+    var Careers = (List<CareerDTO>)ViewBag.Careers;
+
+    //check class career to set border top and left
+    var careerClass = "";
+
+    var UserId = User.Identity.GetUserId();
+
+
+
+
+    //count job posted
+    int JobsPosted = ViewBag.CountJobsPosted;
+
+
+}
+@Html.Hidden("pageCheck", "index")
+<section>
+    <div class="block no-padding">
+        <div class="container fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="main-featured-sec">
+                        <ul class="main-slider-sec text-arrows">
+                            <li class="slideHome"><img src="~/Assets/client/images/resource/mslider3.jpg" alt="" /></li>
+                           
+                        </ul>
+                        <div class="job-search-sec">
+                            <div class="job-search">
+                                <h3>Find New Opportunities, Go To Success!</h3>
+                                <span>Find jobs and career opportunities now</span>
+                                @using (Html.BeginForm("ListJobs", "RecruitJob", FormMethod.Post))
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-3 col-sm-4">
+                                            <div class="job-field">
+                                                <input type="text" placeholder="Job title, keyword or company name" name="keyWord" />
+                                                <i class="la la-keyboard-o"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-4">
+                                            <div class="job-field index-search">
+                                                @Html.DropDownList("idprofession", (IEnumerable<SelectListItem>)ViewBag.ListProfesstions, "All categories", new { @class = "chosen-city" })
+                                                <i class="la la-map-marker"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-4">
+                                            <div class="job-field index-search">
+                                                @Html.DropDownList("idcity", (IEnumerable<SelectListItem>)ViewBag.ListCities, "City", new { @class = "chosen-city" })
+
+                                                <i class="la la-location-arrow"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2  col-md-3 col-sm-12">
+                                            <button type="submit" id="btnsearchjob"><i class="la la-search"></i></button>
+                                        </div>
+                                    </div>
+                                }
+                                @*<div class="or-browser">
+                                        <span>Tìm công việc bằng cách </span>
+                                        <a href="#" title="">Category</a>
+                                    </div>*@
+                            </div>
+                        </div>
+                        <div class="scroll-to">
+                            <a href="#scroll-here" title=""><i class="la la-arrow-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="scroll-here">
+    <div class="block">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                   
+
+                    <div class="cat-sec">
+                        <div class="row no-gape">
+                            @if (Careers.Count > 0)
+                            {
+                                var careerCount = 1;
+                                foreach (var career in Careers.Take(8))
+                                {
+                                    switch (careerCount)
+                                    {
+                                        case 4:
+                                            careerClass = "border-top-left";
+                                            break;
+                                        case 5:
+                                            careerClass = "border-bottom";
+                                            break;
+                                        default:
+                                            careerClass = "";
+                                            break;
+                                    }
+                                    <div class="col-lg-3 col-md-3 col-sm-6">
+                                        <div class="p-category">
+                                            <a href="@Url.Action("ListJobs","RecruitJob",new { idcareer = career.CareerId})" title="@career.CareerName" class="@careerClass">
+                                                <i class="@career.Icon"></i>
+                                                <span>@career.CareerName</span>
+                                                <p>(@career.CountJob jobs)</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    careerCount++;
+                                }
+                            }
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-12">
+                    <div class="browse-all-cat">
+                        <a href="@Url.Action("ShowListCategories","Home")" title="">All categories</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+

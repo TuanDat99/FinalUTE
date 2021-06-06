@@ -1,0 +1,218 @@
+﻿@using JobHunt.BU.DTO
+@using JobHunt.BU.Manage
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Published Recruitment";
+
+    var Recruit = new RecruitManage().GetRecruitInfoByIdAspNetUser(User.Identity.GetUserId());
+}
+@Html.Hidden("TypeFix", (int)JobHunt.BU.Common.Enum.TypeFix.Add)
+
+<section class="overlape">
+    <div class="block no-padding">
+        <div data-velocity="-.1" style="background: url(@Recruit.RICoverImage) 100% 100% no-repeat scroll transparent;" class="parallax scrolly-invisible no-parallax" id="bg-recruit"></div><!-- PARALLAX BACKGROUND IMAGE -->
+        <div class="container fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="inner-header">
+                        <h3>Hello @Recruit.RICompanyName</h3>
+                    </div>
+                    <div class="edit-coverimage" id="bg-upcover">
+                        <a title="Company cover photo">
+                            <div class="edit-avatar__btn up-coverimage">
+                                <img src="~/Assets/client/images/camera.png" class="display-inline-block" />
+                                <p class="display-inline-block text-update-cover-img">Update</p>
+                            </div>
+                            <input type="file" name="" value="" class="btnupcover" id="updatecover" />
+
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="block no-padding">
+        <div class="container">
+            <div class="row no-gape">
+                @Html.Partial("_LayoutMenuLeft")
+                <div class="col-lg-9 column">
+                    <div class="padding-left">
+                        <div class="profile-title">
+                            <h3>Published Recruitment</h3>
+                        </div>
+                        <div class="profile-form-edit upload-cv-right">
+                            <form id="valid-postjob">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <span class="pf-title">Title<span class="red">(*)</span></span>
+                                        <div class="pf-field">
+                                            <input type="text" placeholder="Example: Need to hire IT staff" id="RJTitle" name="RJTitle" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span class="pf-title">Job<span class="red">(*)</span></span>
+                                        <div class="pf-field">
+                                            @Html.DropDownList("RJ_ProfessionId", (IEnumerable<SelectListItem>)ViewBag.ListProfesstions, "--- Job ---", new { @class = "chosen form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Job vacancies<span class="red">(*)</span></span>
+                                        <div class="pf-field">
+                                            <input type="text" id="RJPosition" name="RJPosition" placeholder="Ex: IT staff" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Amount<span class="red">(*)</span></span>
+                                        <div class="pf-field">
+                                            <input type="text" id="RJAmount" placeholder="Ex: 5" name="RJAmount" required>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Salary<span class="red">(*)</span></span>
+                                        <div class="pf-field">
+                                            @Html.DropDownList("RJ_SalaryId", (IEnumerable<SelectListItem>)ViewBag.ListSalaries, "--- Wage ---", new { @class = "chosen form-control", @required = "required" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Level<span class="red">(*)</span></span>
+                                        <div class="pf-field">
+                                            @Html.DropDownList("RJ_LevelId", (IEnumerable<SelectListItem>)ViewBag.ListLevels, "--- Level ---", new { @class = "chosen form-control" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Experience<span class="red">(*)</span></span>
+                                        <div class="pf-field">
+                                            @Html.DropDownList("RJ_ExperienceId", (IEnumerable<SelectListItem>)ViewBag.ListExperiences, "---Experience ---", new { @class = "chosen form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Form of work<span class="red">(*)</span></span>
+                                        <div class="pf-field">
+                                            @Html.DropDownList("RJ_WorkTypeId", (IEnumerable<SelectListItem>)ViewBag.ListWorkTypes, "--- Form of work ---", new { @class = "chosen form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Gender<span class="red">(*)</span></span>
+                                        <div class="pf-field">
+                                            @*<select data-placeholder="Hãy chọn giới tính của bạn" class="chosen" style="display: none;" id="RJGender">
+                                                    <option value="1">Nam</option>
+                                                    <option value="0">Nữ</option>
+                                                    <option value="-1">Khác</option>
+                                                </select>*@
+                                            @Html.DropDownList("RJGender",
+                                            new List<SelectListItem>
+                                            {
+                                            new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.Gender.Boy, Text = "Male"},
+                                            new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.Gender.Girl, Text = "Female"},
+                                            new SelectListItem {Value = ""+(int?)JobHunt.BU.Common.Enum.Gender.NoRequired, Text = "Not required" },
+                                            new SelectListItem {Value = ""+(int?)JobHunt.BU.Common.Enum.Gender.Boy, Text = "Other" }
+                                            }, new { @class = "chosen form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Expired<span class="red">(*)</span></span>
+                                        <div class="pf-field">
+                                            <input type="date" id="RJExpirationDate" name="RJExpirationDate" required>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-12">
+                                        <span class="pf-title">Description<span class="red">(*)</span></span>
+                                        <section id="editor">
+                                            <div class="summernote" id="RJ_Describe"></div>
+                                        </section>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span class="pf-title">Job requirement<span class="red">(*)</span></span>
+                                        <section id="editor1">
+                                            <div class="summernote" id="RJ_Require"></div>
+                                        </section>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span class="pf-title">Benefit<span class="red">(*)</span></span>
+                                        <section id="editor2">
+                                            <div class="summernote" id="RJBenefit"></div>
+                                        </section>
+                                    </div>
+
+                                    @*Thông tin liên hệ*@
+                                    <div class="tilepostjob col-lg-12">
+                                        <div class="profile-title">
+                                            <h3 style="padding-left:0;">Contact Info<span class="red">(*)</span></h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Email</span>
+                                        <div class="pf-field">
+                                            <input type="text" id="RJEmailContact" value="@Recruit.RIEmail" name="RJEmailContact" placeholder="VD: tuandat@gmail.com" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Contact name</span>
+                                        <div class="pf-field">
+                                            <input type="text" id="RJNameContact" value="@Recruit.RICompanyName" name="RJNameContact" placeholder="Le Tuan Dat" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Contact phone</span>
+                                        <div class="pf-field">
+                                            <input type="text" id="RJPhoneContact" value="@Recruit.RIPhone" name="RJPhoneContact" placeholder="VD: 03366515294" required>
+                                        </div>
+                                    </div>
+
+                                    @*Địa chỉ làm việc*@
+                                    <div class="tilepostjob col-lg-12">
+                                        <div class="profile-title">
+                                            <h3 style="padding-left:0;">Work address<span class="red">(*)</span></h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Province / City</span>
+                                        <div class="pf-field">
+                                            @Html.DropDownList("RJCityId", (IEnumerable<SelectListItem>)ViewBag.ListCities, "-- Select Province/City --", new { @class = "chosen form-control" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">District</span>
+                                        <div class="pf-field chosen-container-single">
+                                            <select data-placeholder="Select District" id="RJDistrictId" class="chosen-single dropdown-address form-control">
+                                                <option value="">-- Select District --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Ward</span>
+                                        <div class="pf-field chosen-container-single">
+                                            <select data-placeholder="Select ward" class="chosen-single dropdown-address form-control" id="RJ_WardId">
+                                                <option value="">-- Select ward --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Address</span>
+                                        <div class="pf-field">
+                                            <input id="RJ_WorkPlace" name="RJ_WorkPlace" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <button type="submit" id="postjob">Published Recruitment</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

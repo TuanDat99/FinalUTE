@@ -1,0 +1,202 @@
+﻿@using JobHunt.BU.Manage
+@using JobHunt.BU.DTO
+@using Microsoft.AspNet.Identity
+@{
+    var InfoCandidate = (CandidateDTO)(new CandidateManage().GetCandidateInfoByIdAspNetUser(User.Identity.GetUserId()));
+    var url = Request.Url.ToString();
+}
+@if (Request.IsAuthenticated)
+{
+    if (User.IsInRole("Người tìm việc"))
+    {
+        <div class="my-profiles-sec">
+            <span><img src="@InfoCandidate.CPAvatar" alt="" style="width: 50px; height: 50px" class="avatarlinkclass"> @User.Identity.Name <i class="la la-bars"></i></span>
+        </div>
+        #region
+        <div class="profile-sidebar">
+            <span class="close-profile"><i class="la la-close"></i></span>
+            <div class="can-detail-s">
+                <div class="cst"><img src="@InfoCandidate.CPAvatar" alt="Ảnh đại diện" class="avatarlinkclass" /></div>
+                <h3>@User.Identity.Name</h3>
+                <p>@InfoCandidate.CddEmail</p>
+                <p>Member from @InfoCandidate.CddRegisterDate.Value.ToString("dd/MM/yyyy")</p>
+                <p><i class="la la-map-marker"></i>@InfoCandidate.CddAddress</p>
+            </div>
+            <div class="tree_widget-sec">
+                <ul>
+                    <li class="inner-child">
+                        <a title=""><i class="la la-briefcase"></i>Profile</a>
+                        <ul>
+                            <li><a href="@Url.Action("CandidateProfile","Candidate")" title="">Records management</a></li>
+                            <li><a href="@Url.Action("CandidateUploadCV","Candidate")" title="">CV - Attached documents</a></li>
+                        </ul>
+                    </li>
+                    <li class="inner-child">
+                        <a href="#" title=""><i class="la la-paper-plane"></i>My jobs</a>
+                        <ul>
+                            <li><a href="@Url.Action("SaveJobs","Candidate")" title="">Saved jobs</a></li>
+                            <li><a href="@Url.Action("AppliedJobs","Candidate")" title="">Job application</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("ChangePassword","Candidate")" title=""><i class="la la-flash"></i>Change Password</a>
+                    </li>
+                    @*<li class="inner-child">
+                            <a href="#" title=""><i class="la la-user"></i>Tài khoản</a>
+                            <ul>
+                                <li><a href="@Url.Action("UpdateAccount","Candidate")" title="">Chỉnh sửa tài khoản</a></li>
+                            </ul>
+                        </li>*@
+                    <li>
+                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                        {
+                            @Html.AntiForgeryToken()
+                        <a href="javascript:document.getElementById('logoutForm').submit()" title="Log out of the system"><i class="la la-unlink"></i> Log out</a>
+
+                        }
+
+                    </li>
+                </ul>
+            </div>
+        </div><!-- Profile Sidebar -->
+        #endregion
+    }
+    else if (User.IsInRole("Người tuyển dụng"))
+    {
+        <div class="btns-profiles-sec">
+            <span><img src="~/Assets/client/images/avatar-default.png" alt="Ảnh đại diện" style="width: 50px; height: 50px"> @User.Identity.Name <i class="la la-angle-down"></i></span>
+            <ul style="z-index: 9">
+                <li><a href="@Url.Action("ProfileRecruit","Recruit")" title=""><i class="la la-file-text"></i> Company profile</a></li>
+                <li><a href="@Url.Action("ListJobsPost","Recruit")" title=""><i class="la la-briefcase"></i> Workflow management</a></li>
+                @*<li><a href="@Url.Action("PostJob","Recruit")" title=""><i class="la la-leaf"></i> Đăng tin tuyển dụng</a></li>*@
+                <li><a href="@Url.Action("ChangePassword","Recruit")" title=""><i class="la la-key"></i> Change password</a></li>
+                <li>
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <a href="javascript:document.getElementById('logoutForm').submit()" title="Đăng xuất khỏi hệ thống" class="logout"><i class="la la-history"></i> Logout</a>
+
+                    }
+
+                </li>
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="btn-extars">
+            <ul class="account-btns">
+                <li>
+                    <a href="@Url.Action("", "DashBoard", new { Area = "Admin" })" title="">Manage</a>
+                    
+                </li>
+                <li>
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <a href="javascript:document.getElementById('logoutForm').submit()" title="Đăng xuất khỏi hệ thống" style="color: white; cursor: pointer;"><i class="la la-unlink"></i> Logout</a>
+
+                    }
+                </li>
+            </ul>
+        </div><!-- Btn Extras -->
+    }
+
+}
+else
+{
+    <div class="btn-extars">
+        @*<a href="#" title="" class="post-job-btn"><i class="la la-plus"></i>Post Jobs</a>*@
+
+        <ul class="account-btns">
+            <li class="signup-popup"><a title="Đăng ký tài khoản"><i class="la la-key"></i> Register</a></li>
+            <li class="signin-popup"><a title="Đăng nhập hệ thống"><i class="la la-external-link-square"></i> Login</a></li>
+        </ul>
+    </div><!-- Btn Extras -->
+    if (!url.ToLower().Contains("/login"))
+    {
+        <div class="account-popup-area signin-popup-box">
+            <div class="account-popup">
+                <span class="close-popup"><i class="la la-close"></i></span>
+                <h3>Login</h3>
+                <div class="select-user">
+                    <span id="candidatelogin" class="logintype">Candidate</span>
+                    <span id="employerlogin" class="logintype">Employer</span>
+                </div>
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "__AjaxAntiForgeryForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="cfield">
+                        <input type="text" placeholder="Email" name="Email" id="EmailLogin" />
+                        <i class="la la-user"></i>
+                    </div>
+                    <div class="cfield">
+                        <input type="password" placeholder="********" name="Password" id="PassLogin" />
+                        <i class="la la-key"></i>
+                    </div>
+                    <p class="remember-label">
+                        <input type="checkbox" name="RememberMe" id="RememberMe"><label for="RememberMe">Remember your account</label>
+                    </p>
+                    <a href="#" title="">Forgot password?</a>
+                    <button type="submit" id="Login">Login</button>
+                }
+                <div class="extra-login">
+                    <span>Or</span>
+                    <div class="login-social">
+                        <a class="fb-login" href="#" title=""><i class="fa fa-facebook"></i></a>
+                        <a class="tw-login" href="#" title=""><i class="fa fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- LOGIN POPUP -->
+    }
+
+    <div class="account-popup-area signup-popup-box">
+        <div class="account-popup">
+            <span class="close-popup"><i class="la la-close"></i></span>
+            <h3>Register</h3>
+            <div class="select-user">
+                <span id="candidateregister" class="registertype">Candidate</span>
+                <span id="employerregister" class="registertype">Employer</span>
+            </div>
+            @*<form id="registerform">*@
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "registerform" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="cfield">
+                    <input type="text" placeholder="Registered name" name="UserName" id="UserNameRegister" />
+                    <i class="la la-user"></i>
+                </div>
+                <div class="cfield">
+                    <input type="password" placeholder="password" name="PassRegister" id="PassRegister" />
+                    <i class="la la-key"></i>
+                </div>
+                <div class="cfield">
+                    <input type="password" placeholder="Enter the password again" name="ConfirmPassword" id="ConfirmPassRegister" />
+                    <i class="la la-key"></i>
+                </div>
+                @*<div class="cfield">
+                        <input placeholder="06.11.2007" type="text" class="form-control datepicker">
+                        <i class="la la-key"></i>
+                    </div>*@
+                <div class="cfield">
+                    <input type="text" placeholder="Email" name="EmailRegister" id="EmailRegister" />
+                    <i class="la la-envelope-o"></i>
+                </div>
+                <div class="cfield">
+                    <input type="text" placeholder="Phone Number" name="PhoneRegister" id="PhoneRegister" />
+                    <i class="la la-phone"></i>
+                </div>
+                <button type="submit" id="Register">Register</button>
+            }
+            @*</form>*@
+            <div class="extra-login">
+                <span>Or</span>
+                <div class="login-social">
+                    <a class="fb-login" href="#" title=""><i class="fa fa-facebook"></i></a>
+                    <a class="tw-login" href="#" title=""><i class="fa fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </div><!-- SIGNUP POPUP -->
+}

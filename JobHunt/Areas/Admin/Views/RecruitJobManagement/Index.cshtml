@@ -1,0 +1,121 @@
+﻿@model List<JobHunt.BU.DTO.RecruitJobDTO>
+@{
+    ViewBag.Title = "Work list";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var stt = 0;
+}
+
+<section class="wrap__content" id="list-customer">
+    <div class="listcm main__content" id="list-customer">
+        <div class="listcm__top main__banner">
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-12">
+                    <div class="main__title">
+                        <h1 class="main__title--content">Job post list</h1>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-12">
+
+                    <div class="banner-interactive">
+                        <ul class="interactive__btn group-btn">
+                            <li>
+                                <a class="customer-add customer-btn__add" href="@Url.Action("CreateCandidate","CandidateManagement")">
+                                    Add
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <div class="clear-fix"></div>
+            </div>
+        </div>
+        <div class="listcm__content main__list">
+
+            <div class="list__content main__list--content gridcm">
+                <div class="table__content">
+                    <table id="example" class="display textable" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th class="abovetitlejob">News headlines</th>
+                                @*<th>Tên đầy đủ</th>*@
+                                <th>Date of posting</th>
+                                <th>Expiration date</th>
+                                <th>Posting account</th>
+                                <th>Type of news</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count > 0)
+                            {
+                                foreach (var job in Model)
+                                {
+                                    stt++;
+                                    <tr role="row" class="odd textable" id="trjob@(job.RecruitJobId)">
+                                        <td class="sorting_1">@stt</td>
+                                        <td class="subtitlejob titlejob"><a href="@Url.Action("DetailJob", "RecruitJob", new { id = JobHunt.BU.Common.GenerateUrl.GenerateSlug(job.RJTitle, job.RecruitJobId) })" id="titlejob@(job.RecruitJobId)">@job.RJTitle</a></td>
+                                        <td>@job.RJPostDate.Value.ToString("dd-MM-yyyy")</td>
+                                        @if (job.RJExpirationDate > DateTime.Now)
+                                        {
+                                            <td>@job.RJExpirationDate.Value.ToString("dd-MM-yyyy")</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Expired</td>
+                                        }
+                                        @if (job.RecruitDTO != null)
+                                        {
+                                            <td>@job.RecruitDTO.RIUserName</td>
+
+                                        }
+                                        else
+                                        {
+                                            <td>Admin</td>
+                                        }
+                                        <td>@job.NameType</td>
+                                        <td>@job.TrangThai</td>
+                                        <td class="option text-center">
+                                            <a title="Edit" class="btn btn-primary btn-update-job btn-del-control" href="@Url.Action("updatejob", "recruitjobmanagement", new { id = job.RecruitJobId })">
+                                                <i class="far fa-edit"></i>
+                                            </a>
+                                            <a title="Delete" class="btn danger btn-del-job btn-del-control" input-id-job="@job.RecruitJobId" page-job="list" data-toggle="modal" data-target="#exampleModalCenter">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        @* Popup delete *@
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Delete news posts</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure to delete this <span id="namedelete"></span> post ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary btndeletejob">Agree</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

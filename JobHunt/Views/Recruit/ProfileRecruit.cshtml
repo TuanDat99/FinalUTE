@@ -1,0 +1,173 @@
+﻿@model JobHunt.BU.DTO.RecruitDTO
+@{
+    ViewBag.Title = "Company profile || " + Model.RIFullName;
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Hidden("TypeAccount", 2)
+@Html.Hidden("RecruitId", Model.RecruitId)
+@Html.Hidden("DistrictIdGet", Model.RI_DistrictId)
+@Html.Hidden("WardIdGet", Model.RI_WardId)
+<section class="overlape">
+    <div class="block no-padding">
+        <div data-velocity="-.1" style="background: url(@Model.RICoverImage) 100% 100% no-repeat scroll transparent;" class="parallax scrolly-invisible no-parallax" id="bg-recruit"></div><!-- PARALLAX BACKGROUND IMAGE -->
+        <div class="container fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="inner-header">
+                        <h3>Hello @Model.RICompanyName</h3>
+                    </div>
+                    <div class="edit-coverimage" id="bg-upcover">
+                        <a title="Company cover photo">
+                            <div class="edit-avatar__btn up-coverimage">
+                                <img src="~/Assets/client/images/camera.png" class="display-inline-block" />
+                                <p class="display-inline-block text-update-cover-img">Update</p>
+                            </div>
+                            <input type="file" name="" value="" class="btnupcover" id="updatecover" />
+
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="block no-padding">
+        <div class="container">
+            <div class="row no-gape">
+                @Html.Partial("_LayoutMenuLeft")
+                <div class="col-lg-9 column">
+
+                    @*Ảnh đại diện*@
+                    <div class="padding-left">
+                        <div class="profile-title" id="mp">
+                            <h3>Company cover photo</h3>
+                            <div class="upload-img-bar">
+                                <span class="round"><img src="@Model.RIAvatar" alt="" id="avatarlink" style="width: 156px; height: 156px;" class="avatarlinkclass" /><i>x</i></span>
+                                <div class="upload-info">
+                                    <a title="Upload avatar" id="chooseAvatar">Upload</a>
+                                    <input type="file" name="" value="" class="disabled" id="updateavatar" />
+                                    <span>Maximum file size is 2MB, Min Size: 270x210 And suitable files are .jpg & .png & .jpeg</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*Thông tin hồ sơ*@
+                        <div class="profile-form-edit">
+                            <form id="valid-update-profile">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Company name</span>
+                                        <div class="pf-field">
+                                            @Html.EditorFor(m => m.RICompanyName, new { htmlAttributes = new { placeholder = "Company name", @required = "required" } })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Company's logo</span>
+                                        <div class="pf-field">
+                                            <div class="logo-company display-inline">
+                                                <span title="Company's logo" class="spanlogo">
+                                                    <img src="@Model.RILogo" alt="Company's logo" id="logocompany" />
+                                                </span>
+                                            </div>
+                                            <div class="upload display-inline">
+                                                <div class="main-up-logo">
+                                                    <a title="upload logo" class="titlelogo"><i class="la la-upload"></i>Upload</a>
+                                                    <input type="file" name="name" value="" id="updatelogo" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span class="pf-title">Founded time</span>
+                                        <div class="pf-field">
+                                            @Html.TextBoxFor(model => model.FounedYearString, new { type = "date" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span class="pf-title">Number of people in the company</span>
+                                        <div class="pf-field">
+                                            @Html.DropDownListFor(model => model.RI_CompanySizeId, (IEnumerable<SelectListItem>)ViewBag.ListCompanySizes, "--- Company size ---", new { @class = "chosen-city" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Career</span>
+                                        <div class="pf-field">
+                                            @Html.DropDownListFor(model => model.RI_ProfessionId, (IEnumerable<SelectListItem>)ViewBag.ListProfesstions, "--- Career ---", new { @class = "chosen-city" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span class="pf-title">Introduce</span>
+                                        <div class="pf-field">
+                                            @Html.TextAreaFor(model => model.RIAbout)
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <button type="submit" id="updaterecruit">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="contact-edit profile-form-edit" id="ci">
+                            <h3>Contact information</h3>
+                            <form id="valid-update-profile-contact">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <span class="pf-title">Phone number</span>
+                                        <div class="pf-field">
+                                            @Html.TextBoxFor(model => model.RIPhone)
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span class="pf-title">Email</span>
+                                        <div class="pf-field">
+                                            @Html.TextBoxFor(model => model.RIEmail)
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span class="pf-title">Website</span>
+                                        <div class="pf-field">
+                                            @Html.TextBoxFor(model => model.RIWebsite)
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Province / City</span>
+                                        <div class="pf-field">
+                                            @Html.DropDownListFor(model => model.RI_CityId, (IEnumerable<SelectListItem>)ViewBag.ListCities, "Hãy chọn Tỉnh/Thành phố", new { @class = "chosen" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">District</span>
+                                        <div class="pf-field chosen-container-single">
+                                            <select data-placeholder="Select District" id="RI_DistrictId" class="chosen-single" style="color: #888888; font-size: 13px">
+                                                <option value="">-- Select District --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Wards</span>
+                                        <div class="pf-field chosen-container-single">
+                                            <select data-placeholder="Select Wards" class="chosen-single" id="RI_WardId" style="color: #888888; font-size: 13px">
+                                                <option value="">-- Select Wards --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="pf-title">Address</span>
+                                        <div class="pf-field">
+                                            @Html.TextBoxFor(model => model.RIAddress)
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <button type="submit" id="updatecontactrecruit">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

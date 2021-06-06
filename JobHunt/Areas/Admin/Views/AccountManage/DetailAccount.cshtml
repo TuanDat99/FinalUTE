@@ -1,0 +1,184 @@
+﻿@model JobHunt.BU.DTO.WebmasterInfoDTO
+@using JobHunt.BU.DTO
+@{
+    ViewBag.Title = "Edit your account";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@Html.Hidden("WebmasterInfoId", Model.WebmasterInfoId)
+@Html.Hidden("WI_AspNetUserId", Model.WI_AspNetUserId)
+<div class="wrap__content" id="detail-customer">
+    <section class="content cus-detail main__content">
+        <div class="cus-detail__top main__banner">
+            <div>
+                <div class="">
+                    <div class="main__title text-center">
+                        <h1 class="main__title--content">Edit your account</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-flud">
+            <div class="content__inner main-content">
+                <div class="cus-detail__view cus-edit">
+                    <form id="admin-createaccount-form" class="admin-account-form">
+                        <div class="cus-detail__content">
+                            <div class="cus-detail__content--title">
+                                <h3>Login information<span class="red">(*)</span></h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12">
+                                    <table>
+                                        <tr>
+                                            <td class="tb_label bold">Email<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.EditorFor(m => m.WIEmail, new { htmlAttributes = new { @class = "input-base textinput", placeholder = "dinhthi@gmail.com" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Username<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.EditorFor(m => m.WIUserName, new { htmlAttributes = new { @class = "input-base textinput", placeholder = "dinhthi" } })
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cus-detail__content">
+                            <div class="cus-detail__content--title">
+                                <h3>Account information<span class="red">(*)</span></h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6 col-md-12">
+                                    <table>
+                                        <tr>
+                                            <td class="tb_label bold">Full name<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.EditorFor(m => m.WIFullName, new { htmlAttributes = new { @class = "input-base textinput", placeholder = "Le Tuan Dat" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Phone number<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.EditorFor(m => m.WIPhoneNumber, new { htmlAttributes = new { @class = "input-base passwordtext textinput", placeholder = "0336578924" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Address<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.EditorFor(m => m.WIAddress, new { htmlAttributes = new { @class = "input-base passwordtext textinput", placeholder = "1 Vo Van Ngan" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Role<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.DropDownListFor(m=>m.WIType,
+                                            new List<SelectListItem>
+                                            {
+                                                new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.Role.Employee, Text = "Employee"},
+                                                new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.Role.Admin, Text = "Admin"},
+                                            }, new { @class = "chosen form-control" })
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-xl-6 col-md-12">
+                                    <table>
+                                        <tr>
+                                            <td class="tb_label bold">Gender<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.DropDownListFor(m=>m.WIGender,
+                                            new List<SelectListItem>
+                                            {
+                                                new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.Gender.Boy, Text = "Male"},
+                                                new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.Gender.Girl, Text = "Female"},
+                                                new SelectListItem {Value = ""+(int?)JobHunt.BU.Common.Enum.Gender.Boy, Text = "Other" }
+                                            }, new { @class = "chosen form-control" })
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tb_label bold">Date of birth<span class="red">(*):</span></td>
+                                            <td class="input-field date">
+                                                @Html.EditorFor(m => m.WIBirthdayString, new { htmlAttributes = new { @class = "input-base passwordtext textinput", @type = "date" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Status<span class="red">(*):</span></td>
+                                            <td class="input-field date">
+                                                @Html.DropDownListFor(m=>m.WIStatus,
+                                    new List<SelectListItem>
+                                    {
+                                        new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.StatusCandidate.Active, Text = "Active"},
+                                        new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.StatusCandidate.Block, Text = "Block"},
+
+                                    }, new { @class = "chosen form-control" })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Position<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.DropDownListFor(m=>m.WIPosition,
+                                            new List<SelectListItem>
+                                            {
+                                               
+                                                new SelectListItem {Value = ""+(int?)JobHunt.BU.Common.Enum.WIPosition.Admin, Text = "Admin" }
+                                            }, new { @class = "chosen form-control" })
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-btn text-center">
+                            <button class="btn btn-primary margin-right-30 updateaccount" type="submit" id="account-2">Save</button>
+                            <a href="/Admin/Customer" class="btn danger bt-danger btn--cancel-edit-cm">Cancel</a>
+                        </div>
+                    </form>
+
+
+                    <form id="admin-updatepass-form" class="admin-password-form">
+                        <div class="cus-detail__content">
+                            <div class="cus-detail__content--title">
+                                <h3>Change password</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12">
+                                    <table>
+                                        <tr>
+                                            <td class="tb_label bold">Old password<span class="red">(*):</span></td>
+                                            <td class="input-field ">
+                                                @Html.Editor("WIOldPassword", new { htmlAttributes = new { @class = "input-base textinput inputpass", placeholder = "******", @type = "password" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">New password<span class="red">(*):</span></td>
+                                            <td class="input-field ">
+                                                @Html.Editor("WIPassword", new { htmlAttributes = new { @class = "input-base textinput inputpass", placeholder = "******", @type = "password" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Confirm password<span class="red">(*):</span></td>
+                                            <td class="input-field ">
+                                                @Html.Editor("WIConfirmPassword", new { htmlAttributes = new { @class = "input-base textinput inputpass", placeholder = "******", @type = "password" } })
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-btn text-center">
+                            <button class="btn btn-primary margin-right-30 updateaccount" type="submit" id="account-1">Change password</button>
+                            <a href="/admin/accountmanage/listaccount" class="btn danger bt-danger btn--cancel-edit-cm">Cancel</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        @*list history*@
+    </section>
+</div>

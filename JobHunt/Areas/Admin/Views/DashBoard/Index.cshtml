@@ -1,0 +1,60 @@
+﻿@model List<JobHunt.BU.DTO.AdvertisementDTO>
+    @using JobHunt.BU.DTO
+@{
+    /**/
+
+    ViewBag.Title = "Admin || JobHunt";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var stt = 0;
+
+    //List jobs
+    var ListJobs = (List<RecruitJobDTO>)ViewBag.ListTopFindJob;
+}
+
+
+<section class="listSupplier main__content">
+    
+        @*Danh sách công việc tìm kiếm nhiều nhất*@
+        <div class="dashboard__content">
+            <div class="dashboard__content--banner">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="dashboard__content--title">
+                            <h2 class="dashboard-title">Job listings with the most views</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard__table">
+                    <table class="tablecm table--base" id="tablecm">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Posting</th>
+                                <th>Job</th>
+                                <th>Career</th>
+                                <th>Number of views</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ListJobs != null && ListJobs.Count > 0)
+                            {
+                                foreach (var job in ListJobs.Take(10))
+                                {
+                                    stt++;
+                                    <tr role="row">
+                                        <td>@stt</td>
+                                        <td>@job.RJTitle</td>
+                                        <td class="tdadvert">@job.ProfessionDTO.PFName</td>
+                                        <td>@job.ProfessionDTO.CareerDTO.CareerName</td>
+                                        <td>@job.RJCount</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+
+ 
+</section>

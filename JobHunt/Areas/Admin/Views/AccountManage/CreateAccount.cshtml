@@ -1,0 +1,158 @@
+﻿@{
+    ViewBag.Title = "Thêm tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wrap__content" id="detail-customer">
+    <section class="content cus-detail main__content">
+        <div class="cus-detail__top main__banner">
+            <div>
+                <div class="">
+                    <div class="main__title text-center">
+                        <h1 class="main__title--content">Add account</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-flud">
+            <div class="content__inner main-content">
+                <div class="cus-detail__view cus-edit">
+                    <form id="admin-createaccount-form" class="admin-account-form">
+                        <div class="cus-detail__content">
+                            <div class="cus-detail__content--title">
+                                <h3>Login information<span class="red">(*)</span></h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12">
+                                    <table>
+                                        <tr>
+                                            <td class="tb_label bold">Email<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.Editor("WIEmail", new { htmlAttributes = new { @class = "input-base textinput", placeholder = "dinhthia@gmail.com" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Username<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.Editor("WIUserName", new { htmlAttributes = new { @class = "input-base textinput", placeholder = "nguyenvana" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Password<span class="red">(*):</span></td>
+                                            <td class="input-field ">
+                                                @Html.Editor("WIPassword", new { htmlAttributes = new { @class = "input-base textinput inputpass", placeholder = "******", @type = "password" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Confirm password<span class="red">(*):</span></td>
+                                            <td class="input-field ">
+                                                @Html.Editor("WIConfirmPassword", new { htmlAttributes = new { @class = "input-base textinput inputpass", placeholder = "******", @type = "password" } })
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cus-detail__content">
+                            <div class="cus-detail__content--title">
+                                <h3>Account information<span class="red">(*)</span></h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6 col-md-12">
+                                    <table>
+                                        <tr>
+                                            <td class="tb_label bold">Full name<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.Editor("WIFullName", new { htmlAttributes = new { @class = "input-base textinput", placeholder = "Le Tuan Dat" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Phone number<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.Editor("WIPhoneNumber", new { htmlAttributes = new { @class = "input-base passwordtext textinput", placeholder = "0336578924" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Address<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.Editor("WIAddress", new { htmlAttributes = new { @class = "input-base passwordtext textinput", placeholder = "1 Vo Van Ngan" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Role<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.DropDownList("WIType",
+                                            new List<SelectListItem>
+                                            {
+                                                new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.Role.Employee, Text = "Employee"},
+                                                new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.Role.Admin, Text = "Admin"},
+                                            }, new { @class = "chosen form-control" })
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-xl-6 col-md-12">
+                                    <table>
+                                        <tr>
+                                            <td class="tb_label bold">Gender<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.DropDownList("WIGender",
+                                            new List<SelectListItem>
+                                            {
+                                                new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.Gender.Boy, Text = "Male"},
+                                                new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.Gender.Girl, Text = "Female"},
+                                                new SelectListItem {Value = ""+(int?)JobHunt.BU.Common.Enum.Gender.Boy, Text = "Other" }
+                                            }, new { @class = "chosen form-control" })
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tb_label bold">Date of birth<span class="red">(*):</span></td>
+                                            <td class="input-field date">
+                                                @Html.Editor("WIBirthDay", new { htmlAttributes = new { @class = "input-base passwordtext textinput", @type = "date" } })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Type<span class="red">(*):</span></td>
+                                            <td class="input-field date">
+                                                @Html.DropDownList("WIStatus",
+                                    new List<SelectListItem>
+                                    {
+                                        new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.StatusAccount.Active, Text = "Active"},
+                                        new SelectListItem { Value = ""+(int?)JobHunt.BU.Common.Enum.StatusAccount.Block, Text = "Block"},
+
+                                    }, new { @class = "chosen form-control" })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tb_label bold">Position<span class="red">(*):</span></td>
+                                            <td class="input-field">
+                                                @Html.DropDownList("WIPosition",
+                                            new List<SelectListItem>
+                                            {
+                    
+                                                new SelectListItem {Value = ""+(int?)JobHunt.BU.Common.Enum.WIPosition.Admin, Text = "Admin" }
+                                            }, new { @class = "chosen form-control" })
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-btn text-center">
+                            <button class="btn btn-primary margin-right-30 updateaccount" type="submit" id="account-1">Create</button>
+                            <a href="/admin/accountmanage/listaccount" class="btn danger bt-danger btn--cancel-edit-cm">Cancel</a>
+                            @*<a class="btn btn-primary btn-del-cm danger" onclick="document.showDel('cm')" input-id-cm="" page-cm="detail">Xóa</a>*@
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @*list history*@
+    </section>
+</div>
+
+
